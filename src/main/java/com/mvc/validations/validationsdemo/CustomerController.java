@@ -35,11 +35,7 @@ public class CustomerController {
             @Valid @ModelAttribute("costumer") CostumerValidation costumerValidation,
             BindingResult bindingResult) {
 
-        System.err.println(bindingResult.toString());
-
-        if (bindingResult.hasErrors())
-            return "CostumerForm";
-
+        if (bindingResult.hasErrors()) return "CostumerForm";
         return "CostumerConfirmation";
 
     }
