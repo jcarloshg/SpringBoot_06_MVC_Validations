@@ -3,20 +3,20 @@
 Hello friends. 👋
 
 This project contains the application about the validations provided from Java Bean Validation 🫘
-Also, it manages the errors from the validations make when the data is invalid.
+Also, it manages the errors from the validations make by the when the data is invalid.
 
 
 ## Index 🚀
 
 - [Overview](#overview-)
 - [Implementation](#implementation-)
-    - [Files](#files-)
     - [Overview about the flow](#overview-about-the-flow-️)
+    - [Files](#files-)
     - [Validations](#validations-)
     - [Custom Validations](#custom-validations-)
-    - [Manage errors in the controller](#manage-errors-in-the-controller-)
     - [Show errors](#showing-errors-)
 - [Dependencies](#dependencies-)
+- [Results](#results-)
 
 
 
@@ -33,6 +33,31 @@ Also, it manages the errors from the validations make when the data is invalid.
 
 ## Implementation 🪖
 
+### Overview about the flow 🛤️
+
+- The user sends the data to the **[http://localhost:8080/processForm](http://localhost:8080/processForm)** service.
+- The controller get the request.
+    - The service tries to create a new Costumer with the data.
+    - The native validations are running to valida the data
+    - The customs validations are running to valida the data
+- The endpoint continues
+- If the data is valid, so, the services sends the view [CostumerConfirmation.html](target/classes/templates/CostumerConfirmation.html)
+- If the data has errors, so, the service sends the view [CostumerForm.html](target/classes/templates/CostumerForm.html)
+
+```java
+@PostMapping("/processForm")
+    public String processForm(
+        @Valid @ModelAttribute("costumer") CostumerValidation costumerValidation,
+        BindingResult bindingResult
+    ) {
+
+    if (bindingResult.hasErrors()) return "CostumerForm";
+    return "CostumerConfirmation";
+}
+```
+
+- ![Overview about the flow](<DOCs/images/Frame 14 (1).png>)
+
 ### Files 🪧
 
 - Model:
@@ -45,10 +70,6 @@ Also, it manages the errors from the validations make when the data is invalid.
     - [CostumerConfirmation.html](src/main/resources/templates/CostumerConfirmation.html)
 - Controller:
     - [CustomerController.java](src/main/java/com/mvc/validations/validationsdemo/CustomerController.java)
-
-
-### Overview about the flow 🛤️
-- ![Overview about the flow](<DOCs/images/Frame 14 (1).png>)
 
 
 ### Validations ✅✅
@@ -108,31 +129,6 @@ public class CourseCodeConstraintValidator implements ConstraintValidator<Course
 }
 ```
 
-
-### Manage errors in the *Controller* 🛞
-
-- The user sends the data to the **[http://localhost:8080/processForm](http://localhost:8080/processForm)** service.
-- The controller get the request.
-    - The service tries to create a new Costumer with the data.
-    - The native validations are running to valida the data
-    - The customs validations are running to valida the data
-- The endpoint continues
-- If the data is valid, so, the services sends the view [CostumerConfirmation.html](target/classes/templates/CostumerConfirmation.html)
-- If the data has errors, so, the service sends the view [CostumerForm.html](target/classes/templates/CostumerForm.html)
-
-```java
-@PostMapping("/processForm")
-    public String processForm(
-        @Valid @ModelAttribute("costumer") CostumerValidation costumerValidation,
-        BindingResult bindingResult
-    ) {
-
-    if (bindingResult.hasErrors()) return "CostumerForm";
-    return "CostumerConfirmation";
-}
-```
-
-
 ### Showing errors 🔴
 
 ```html
@@ -155,3 +151,8 @@ public class CourseCodeConstraintValidator implements ConstraintValidator<Course
 - spring-boot-starter-test
 
 [pom.xml 🪶](pom.xml)
+
+
+
+## Results 🟢
+- [video](https://github.com/user-attachments/assets/7bf2537f-c7ed-4f28-b7a0-9eb97a51f0dc)
